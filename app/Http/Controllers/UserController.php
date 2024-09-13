@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -11,7 +12,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $user = User::all();
+        return view('admin.user.index', compact('user'));
     }
 
     /**
@@ -19,7 +21,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.user.create');
     }
 
     /**
@@ -27,7 +29,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name_lengkap' => 'required',
+            'email' => 'required|email|unique:users',
+        ]);
+        $user = User::create([
+            'name_lengkap' => $request->name_lengkap,
+            'email' => $request->email,
+        ]);
+        return redirect()->route('user.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -43,7 +53,8 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $edit = User::findOrFail($id);
+        return view('admin.user.edit', compact('edit'));
     }
 
     /**
@@ -51,7 +62,16 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $request->validate([
+            'name_lengkap' => 'required',
+            'email' => 'required|email|unique:users',
+        ]);
+        $user = User::create([
+            'name_lengkap' => $request->name_lengkap,
+            'email' => $request->email,
+        ]);
+        return redirect()->route('user.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -59,6 +79,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFind($id);
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'Data Berhasil Dihapus');
     }
 }

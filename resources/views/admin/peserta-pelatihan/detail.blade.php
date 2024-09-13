@@ -1,8 +1,7 @@
 @extends('layout.app')
-@section('title', 'Dashboard')
+@section('title', 'Detail Peserta')
 @section('content')
 
-    DASHBOARDDD
+    
 
 @endsection
-

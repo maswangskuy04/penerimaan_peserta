@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('nama_sekolah');
             $table->string('kejuruan');
             $table->string('no_hp');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('aktivitas_saat_ini');
             $table->tinyInteger('status')->default(0);
             $table->timestamps();

@@ -19,6 +19,7 @@ class JurusanSeeder extends Seeder
             'Desain Grafis',
             'Tata Boga',
             'Tata Busana',
+            'Tata Graha',
             'Teknik Pendingin',
             'Teknik Komputer',
             'Otomotif Sepeda Motor',

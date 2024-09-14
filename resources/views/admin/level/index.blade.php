@@ -1,5 +1,4 @@
 @extends('layout.app')
-
 @section('title', 'Level Page')
 
 @section('content')
@@ -21,13 +20,16 @@
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>
                                 <td>{{ $lvl->nama_level }}</td>
-                                <td>
-                                    <a href="" class="btn btn-outline-warning btn-sm">Update</a> |
-                                    <a href="" class="btn btn-outline-danger btn-sm">Danger</a>
+                                <td class="justify-content-center"><a href="{{ route('level.edit', $lvl->id) }}"
+                                    class="btn btn-outline-warning btn-sm">Update</a> |
+                                    <form class="d-inline" action="{{ route('level.destroy', $lvl->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">Danger</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>

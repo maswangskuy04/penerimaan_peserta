@@ -1,12 +1,12 @@
 @extends('layout.app')
-@section('title', 'Edit Peserta')
+@section('title', 'Edit Peserta Page')
 @section('content')
 
     @if (session('message'))
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-    <form action="{{ route('peserta-pelatihan.edit', $edit->id) }}" mothod="post" enctype="multipart/form-data">
+    <form action="{{ route('peserta-pelatihan.update', $edit->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="mb-3">

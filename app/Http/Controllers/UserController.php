@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Level;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -12,8 +14,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $user = User::all();
-        return view('admin.user.index', compact('user'));
+
+        $users = User::all();
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -21,7 +24,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('admin.user.create');
+        $levels = Level::get();
+        return view('admin.user.create', compact('levels'));
     }
 
     /**
@@ -29,13 +33,18 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name_lengkap' => 'required',
-            'email' => 'required|email|unique:users',
-        ]);
-        $user = User::create([
-            'name_lengkap' => $request->name_lengkap,
+        // $request->validate([
+        //     'id_level' =>  'required',
+        //     'name_lengkap' => 'required',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|password|min:8'
+        // ]);
+
+        User::create([
+            'id_level' => $request->id_level,
+            'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
+            'password' => Hash::make($request->password)
         ]);
         return redirect()->route('user.index')->with('success', 'Data Berhasil Ditambahkan');
     }
@@ -53,8 +62,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
+        $levels = Level::get();
         $edit = User::findOrFail($id);
-        return view('admin.user.edit', compact('edit'));
+        return view('admin.user.edit', compact('edit', 'levels'));
     }
 
     /**
@@ -62,15 +72,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::findOrFail($id);
-        $request->validate([
-            'name_lengkap' => 'required',
-            'email' => 'required|email|unique:users',
-        ]);
-        $user = User::create([
-            'name_lengkap' => $request->name_lengkap,
+        $users = User::findOrFail($id);
+        // $request->validate([
+        //     'id_level' =>  'required',
+        //     'name_lengkap' => 'required',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|password|min:8'
+        // ]);
+
+        User::where('id', $id)->update([
+            'id_level' => $request->id_level,
+            'nama_lengkap' => $request->nama_lengkap,
             'email' => $request->email,
+            'password' => ($request->password ? Hash::make($request->password) : $users->password)
         ]);
+
         return redirect()->route('user.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
@@ -79,7 +95,7 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        $user = User::findOrFind($id);
+        $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('user.index')->with('success', 'Data Berhasil Dihapus');
     }

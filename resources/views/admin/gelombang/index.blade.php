@@ -1,33 +1,30 @@
 @extends('layout.app')
-
-@section('title', 'User Page')
+@section('title', 'Gelombang Page')
 
 @section('content')
     <div class="col-12">
         <div class="bg-secondary rounded h-100 p-4">
-            <h6 class="mb-2">Table user</h6>
-            <a href="{{ route('user.create') }}" class="btn btn-outline-info btn-sm my-2">Tambah User</a>
-            @csrf
-            @method('PUT')
+            <h6 class="mb-2">Table Level</h6>
+            <a href="{{ route('gelombangs.create') }}" class="btn btn-outline-info btn-sm my-2">Tambah Gelombang</a>
             <div class="table-responsive">
                 <table class="table table-hover text-center">
                     <thead>
                         <tr>
                             <th class="col-1">No</th>
-                            <th scope="col">Nama Lengkap</th>
-                            <th scope="col">Hak Akses</th>
-                            <th class="col-2">Aksi</th>
+                            <th scope="col">Nama Gelombang</th>
+                            <th class="col-2">Aktif</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $key => $user)
+                        @foreach ($gelombangs as $key => $gelo)
                             <tr>
                                 <th scope="row">{{ $key + 1 }}</th>
-                                <td>{{ $user->nama_lengkap }}</td>
-                                <td>{{ $user->levels->nama_level }}</td>
-                                <td class="justify-content-center"><a href="{{ route('user.edit', $user->id) }}"
-                                        class="btn btn-outline-warning btn-sm">Update</a> |
-                                    <form class="d-inline" action="{{ route('user.destroy', $user->id) }}" method="POST">
+                                <td>{{ $gelo->nama_gelombang }}</td>
+                                <td>{{ $gelo->aktif }}</td>
+                                <td class="justify-content-center"><a href="{{ route('gelombangs.edit', $gelo->id) }}"
+                                    class="btn btn-outline-warning btn-sm">Update</a> |
+                                    <form class="d-inline" action="{{ route('gelombangs.destroy', $gelo->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-outline-danger btn-sm">Danger</button>
@@ -35,7 +32,6 @@
                                 </td>
                             </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>

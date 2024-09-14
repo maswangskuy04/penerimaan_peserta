@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
@@ -14,14 +17,28 @@ class LoginController extends Controller
 
     public function actionLogin(Request $request)
     {
-        $credentials = $request->only(['email', 'password']);
+        $email = $request->email;
+        $password = $request->password;
 
-        if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard');
+        $data = User::where('email', $email)->first();
+
+        if($data) {
+            if(Hash::check($password, $data->password)) {
+                Auth::login($data);
+                return redirect()->route('admin.dashboard');
+            } else {
+                return redirect()->route('login')->with('message', 'Email atau Password salah!');
+            }
+        } else {
+            return redirect()->route('login')->with('message', 'Email atau Password salah!');
         }
+    }
 
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ])->onlyInput('email');
+    public function actionLogout(Request $request)
+    {
+        Auth::logout();
+        Session::flush();
+
+        return redirect()->route('login')->with('success', 'Anda telah logout!');
     }
 }

@@ -1,8 +1,10 @@
 @extends('layout.app')
-@section('title', 'Dashboard')
+
+@section('title', 'Dashboard Page')
+
 @section('content')
 
-    DASHBOARDDD
+   INI DASHBOARDDD CUYYY
 
 @endsection
 

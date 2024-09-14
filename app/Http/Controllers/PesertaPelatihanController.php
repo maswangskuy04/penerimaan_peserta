@@ -12,8 +12,8 @@ class PesertaPelatihanController extends Controller
      */
     public function index()
     {
-        $pesertaPelatihan = PesertaPelatihan::all();
-        return view('admin.peserta-pelatihan.index');
+        $pesertas = PesertaPelatihan::all();
+        return view('admin.peserta-pelatihan.index', compact('pesertas'));
     }
 
     /**
@@ -21,7 +21,7 @@ class PesertaPelatihanController extends Controller
      */
     public function create()
     {
-        return view('admin.peserta-pelatihan.create');
+        //
     }
 
     /**
@@ -29,7 +29,24 @@ class PesertaPelatihanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'id_jurusan' => 'required|string',
+            'id_gelombang' => 'required|string',
+            'nama_lengkap' => 'required|string',
+            'nik' => 'required|string',
+            'kartu_keluarga' => 'required|string',
+            'jenis_kelamin' => 'required|string',
+            'tempat_lahir' => 'required|string',
+            'tanggal_lahir' => 'required|string',
+            'pendidikan_terakhir' => 'required|string',
+            'nama_sekolah' => 'required|string',
+            'kejuruan' => 'required|string',
+            'nomor_hp' => 'required|string|numeric',
+            'email' => 'required|string|unique',
+            'aktivitas_saat_ini' => 'required|string',
+        ]);
+        PesertaPelatihan::create($request->all());
+        return redirect()->route('peserta-pelatihan.index')->with('success', 'Data berhasil disimpan');
     }
 
     /**
@@ -56,21 +73,7 @@ class PesertaPelatihanController extends Controller
     {
         $pesertaPelatihan = PesertaPelatihan::findOrFail($id);
         $request->validate([
-            'id_jurusan' => 'required|string',
-            'id_gelombang' => 'required|string',
-            'nama_lengkap' => 'required|string',
-            'nik' => 'required|string',
-            'kartu_keluarga' => 'required|string',
-            'jenis_kelamin' => 'required|string',
-            'tempat_lahir' => 'required|string',
-            'tanggal_lahir' => 'required|string',
-            'pendidikan_terakhir' => 'required|string',
-            'nama_sekolah' => 'required|string',
-            'kejuruan' => 'required|string',
-            'nomor_hp' => 'required|string',
-            'email' => 'required|string',
-            'aktivitas_saat_ini' => 'required|string',
-            'status' => 'required|string',
+            'status' => 'integer|required',
         ]);
         $pesertaPelatihan->update($request->all());
         return redirect()->route('peserta-pelatihan.index')->with('success', 'Data Berhasil Diupdate');

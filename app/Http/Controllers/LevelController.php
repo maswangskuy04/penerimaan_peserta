@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Level;
-use App\Http\Requests\StoreLevelRequest;
-use App\Http\Requests\UpdateLevelRequest;
-use App\Http\Controllers\Request;
+
 class LevelController extends Controller
 {
     /**
@@ -14,7 +13,7 @@ class LevelController extends Controller
     public function index()
     {
         $levels = Level::all();
-        return view('admin.level.index',  compact('levels'));
+        return view('admin.level.index', compact('levels'));
     }
 
     /**
@@ -31,19 +30,18 @@ class LevelController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name_level' => 'required',
+            'nama_level' => 'required',
         ]);
-        $levels = Level::create([
-            'nama_level' => $request->nama_level,
+        Level::create([
+            'nama_level' => $request->nama_level
         ]);
         return redirect()->route('level.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
-
     /**
      * Display the specified resource.
      */
-    public function show(Level $level)
+    public function show(string $id)
     {
         //
     }
@@ -51,7 +49,7 @@ class LevelController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(String $id)
+    public function edit(string $id)
     {
         $edit = Level::findOrFail($id);
         return view('admin.level.edit', compact('edit'));
@@ -60,26 +58,25 @@ class LevelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, String $id)
+    public function update(Request $request, string $id)
     {
         $levels = Level::findOrFail($id);
         $request->validate([
             'nama_level' => 'required',
         ]);
-
-        $levels = Level::create([
+        Level::where('id', $id)->update([
             'nama_level' => $request->nama_level,
         ]);
-        return redirect()->route('level.index')->with('success', 'Data Berhasil Ditambahkan');
+        return redirect()->route('level.index')->with('success', 'Data Jurusan Berhasil Diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(String $id)
+    public function destroy(string $id)
     {
-        $levels = Level::findOrFind($id);
+        $levels = Level::findOrFail($id);
         $levels->delete();
-        return redirect()->route('level.index')->with('success', 'Data Berhasil Dihapus');
+        return redirect()->route('level.index')->with('success', 'Data Jurusan berhasil dihapus');
     }
 }

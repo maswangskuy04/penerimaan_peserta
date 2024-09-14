@@ -12,7 +12,8 @@ class JurusanController extends Controller
      */
     public function index()
     {
-        //
+        $jurusans = Jurusan::all();
+        return view('admin.jurusan.index', compact('jurusans'));
     }
 
     /**
@@ -20,7 +21,7 @@ class JurusanController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.jurusan.create');
     }
 
     /**
@@ -28,7 +29,11 @@ class JurusanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama_jurusan' => 'required',
+        ]);
+        Jurusan::create($request->all());
+        return redirect()->route('jurusan.index')->with('success', 'Data Jurusan Berhasil Ditambahkan');
     }
 
     /**
@@ -42,9 +47,10 @@ class JurusanController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Jurusan $jurusan)
+    public function edit(string $id)
     {
-        //
+        $edit = Jurusan::findOrFail();
+        return view('admin.jurusan.edit', compact('edit'));
     }
 
     /**
@@ -52,14 +58,21 @@ class JurusanController extends Controller
      */
     public function update(Request $request, Jurusan $jurusan)
     {
-        //
+        $jurusans = Jurusan::findOrFail();
+        $request->validate([
+            'nama_jurusan' => 'required',
+        ]);
+        $jurusans->update($request->all());
+        return redirect()->route('jurusan.index')->with('success', 'Data Jurusan Berhasil Diubah');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Jurusan $jurusan)
+    public function destroy(string $id)
     {
-        //
+        $jurusans = Jurusan::findOrFail($id);
+        $jurusans->delete();
+        return redirect()->route('jurusan.index')->with('success', 'Data Jurusan Berhasil Dihapus');
     }
 }

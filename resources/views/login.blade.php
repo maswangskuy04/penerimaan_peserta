@@ -24,6 +24,12 @@
                 </div>
                 <div class="col-lg-6">
                     <div class="card2 card border-0 px-4 py-5">
+                        @if (\Session::has('message'))
+                        <div class="alert alert-danger">{{ Session::get('message') }}</div>
+                        @endif
+                        @if (\Session::has('success'))
+                        <div class="alert alert-success">{{ Session::get('success') }}</div>
+                        @endif
                         <form action="{{ route('action-login') }}" method="post">
                             @csrf
                             <div class="row px-3 mb-4">

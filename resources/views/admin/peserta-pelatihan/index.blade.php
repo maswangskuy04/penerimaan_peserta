@@ -20,19 +20,9 @@
                                     <th>Jurusan</th>
                                     <th>Gelombang</th>
                                     <th>Nama Lengkap</th>
-                                    <th>NIK</th>
-                                    <th>Kartu Keluarga</th>
-                                    <th>Jenis Kelamin</th>
-                                    <th>Tempat Lahir</th>
-                                    <th>Tanggal Lahir</th>
-                                    <th>Pendidikan Terakhir</th>
-                                    <th>Nama Sekolah</th>
-                                    <th>Nomor Hp</th>
-                                    <th>Email</th>
-                                    <th>Aktivitas Saat Ini</th>
                                     <th>Status</th>
                                     <th>Detail</th>
-                                    <th class="col-2">Aksi</th>
+                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -42,23 +32,25 @@
                                         <td>{{ $peserta->jurusan->nama_jurusan }}</td>
                                         <td>{{ $peserta->gelombang->nama_gelombang }}</td>
                                         <td>{{ $peserta->nama_lengkap }}</td>
-                                        <td>{{ $peserta->nik }}</td>
-                                        <td>{{ $peserta->kartu_keluarga }}</td>
-                                        <td>{{ $peserta->jenis_kelamin }}</td>
-                                        <td>{{ $peserta->tempat_lahir }}</td>
-                                        <td>{{ $peserta->tanggal_lahir }}</td>
-                                        <td>{{ $peserta->pendidikan_terakhir }}</td>
-                                        <td>{{ $peserta->nama_sekolah }}</td>
-                                        <td>{{ $peserta->nomor_hp }}</td>
-                                        <td>{{ $peserta->email }}</td>
-                                        <td>{{ $peserta->aktivitas_saat_ini }}</td>
-                                        <td></td>
                                         <td>
-                                            <a href="" class="btn btn-warning">Detail</a>
+                                            <select name="status" class="form-control select2"
+                                                id="status-{{ $peserta->id }}" data-id="{{ $peserta->id }}">
+                                                <option value="">-- Pilih Status --</option>
+                                                <option value="1" {{ $peserta->status == 1 ? 'selected' : '' }}>TIDAK
+                                                    LULUS</option>
+                                                <option value="2" {{ $peserta->status == 2 ? 'selected' : '' }}>
+                                                    CADANGAN</option>
+                                                <option value="3" {{ $peserta->status == 3 ? 'selected' : '' }}>LULUS
+                                                </option>
+                                            </select>
+                                        </td>
+                                        <td class="text-center">
+                                            <a href="{{ route('peserta-pelatihan.show', $peserta->id) }}"
+                                                class="btn btn-warning">Detail</a>
                                         </td>
                                         <td>
                                             <form action="{{ route('peserta-pelatihan.destroy', $peserta->id) }}"
-                                                method="post" class="d-inline">
+                                                method="post" class="text-center">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-outline-danger btn-sm">Hapus</button>
@@ -74,4 +66,56 @@
         </div>
     </div>
 
+@endsection
+@section('script')
+    <script>
+        document.addEventListener('DOMContentLoaded', (event) => {
+            const itemStatus = document.querySelectorAll('.form-control');
+            itemStatus.forEach(status => {
+                status.addEventListener('change', (event) => {
+                    const itemId = event.target.getAttribute('data-id');
+                    const statusValue = event.target.value;
+                    const csrfToken = document.querySelector('meta[name="csrf-token"]')
+                        .getAttribute('content');
+
+                    fetch(`peserta-pelatihan/update-status/${itemId}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': csrfToken,
+                            },
+                            body: JSON.stringify({
+                                status: statusValue
+                            })
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (statusValue == 1) {
+                                Swal.fire({
+                                    title: 'TIDAK LULUS!',
+                                    text: 'Mantap Tidak Lulus',
+                                    icon: 'error'
+                                })
+                            }
+                            if (statusValue == 2) {
+                                Swal.fire({
+                                    title: 'CADANGAN!',
+                                    text: 'Mantap Cadangan',
+                                    icon: 'warning'
+                                })
+                            }
+                            if (statusValue == 3) {
+                                Swal.fire({
+                                    title: 'LULUS!',
+                                    text: 'Mantap Lulus',
+                                    icon: 'success'
+                                })
+                            }
+                            console.log(statusValue);
+
+                        })
+                })
+            })
+        })
+    </script>
 @endsection

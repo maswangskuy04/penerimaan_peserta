@@ -52,9 +52,10 @@ class PesertaPelatihanController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(PesertaPelatihan $pesertaPelatihan)
+    public function show(Request $request, $id)
     {
-        //
+        $peserta = PesertaPelatihan::findOrFail($id);
+        return view('admin.peserta-pelatihan.detail', compact('peserta'));
     }
 
     /**
@@ -84,8 +85,17 @@ class PesertaPelatihanController extends Controller
      */
     public function destroy(String $id)
     {
-        $pesertaPelatihan = PesertaPelatihan::findOrFind($id);
+        $pesertaPelatihan = PesertaPelatihan::findOrFail($id);
         $pesertaPelatihan->delete();
         return redirect()->route('peserta-pelatihan.index')->with('success', 'Data Berhasil Dihapus');
+    }
+
+    public function updateStatus(Request $request, $id)
+    {
+        $pesertaPelatihan = PesertaPelatihan::findOrFail($id);
+        $pesertaPelatihan->status = $request->status;
+        $pesertaPelatihan->save();
+
+        return response()->json(['message' => 'Data berhasil broo']);
     }
 }

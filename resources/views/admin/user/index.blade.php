@@ -11,7 +11,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-striped" id="table-1">
+                        <table class="table table-striped" id="mytable">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -26,7 +26,7 @@
                                     <td>{{ $key + 1 }}</td>
                                     <td>{{ $user->nama_lengkap }}</td>
                                     <td>{{ $user->levels->nama_level }}</td>
-                                    <td>
+                                    <td class="align middle">
                                         <a href="{{ route('user.edit', $user->id) }}" class="btn btn-outline-secondary btn-sm">Edit</a>
                                         <form action="{{ route('user.destroy', $user->id) }}" method="post" class="d-inline">
                                             @csrf

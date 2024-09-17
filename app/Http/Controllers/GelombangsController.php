@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Gelombangs;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class GelombangsController extends Controller
@@ -75,5 +76,15 @@ class GelombangsController extends Controller
         $gelombangs = Gelombangs::findOrFail($id);
         $gelombangs->delete();
         return redirect()->route('gelombangs.index')->with('success', 'Data berhasil dihapus');
+    }
+
+    public function updateStatus($id): JsonResponse
+    {
+        Gelombangs::where('id', '!=', $id)->update(['aktif' => 0]);
+        $gelombang = Gelombangs::findOrFail($id);
+        $gelombang->aktif = 1;
+        $gelombang->save();
+
+        return response()->json(['success' => 'Status gelombang sudah aktif']);
     }
 }

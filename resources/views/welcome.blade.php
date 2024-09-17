@@ -17,7 +17,7 @@
             </div>
             <div class="header">
                 <div class="logo1">
-                    <img src="{{ asset('img/logo-jakarta-raya.png') }}" alt="ini logo bro" width="300px">
+                    <img src="{{ asset('img/logo-jaya-raya.png') }}" alt="ini logo bro" width="100px">
                 </div>
                 <div class="text-header">
                     <h3>Pemerintah Provinsi DKI Jakarta</h3>
@@ -25,7 +25,7 @@
                     <h2>Pusat Pelatihan Kerja Daerah Jakarta Pusat</h2>
                 </div>
                 <div class="logo2">
-                    <img src="{{ asset('img/logoppkd.png') }}" alt="ini logo bro">
+                    <img src="{{ asset('img/logoppkd.png') }}" alt="ini logo bro" width="110px">
                 </div>
             </div>
         </div>

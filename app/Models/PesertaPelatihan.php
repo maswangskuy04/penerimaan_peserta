@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Jurusan;
 use App\Models\Gelombangs;
 
 class PesertaPelatihan extends Model
@@ -21,14 +22,19 @@ class PesertaPelatihan extends Model
         'tanggal_lahir',
         'pendidikan_terakhir',
         'nama_sekolah',
-        'kejuruan',
         'no_hp',
         'email',
         'aktivitas_saat_ini',
         'status'
     ];
+
+    public function jurusan()
+    {
+        return  $this->belongsTo(Jurusan::class, 'id_jurusan');
+    }
+
     public function gelombang()
     {
-        return $this->belongsTo(Gelombangs::class, 'id_gelombang', 'id');
+        return $this->belongsTo(Gelombangs::class, 'id_gelombang');
     }
 }

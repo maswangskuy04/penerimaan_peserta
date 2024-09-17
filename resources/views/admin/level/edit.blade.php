@@ -6,6 +6,30 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form action="{{ route('level.update', $edit->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-header">
+                        <h4>Form Level</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Nama Level</label>
+                            <input type="text" class="form-control" name="nama_level" value="{{ $edit->nama_level }}" required>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary">Perbarui</button>
+                        <a href="{{ route('level.index') }}" class="btn btn-danger">Kembali</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <form action="{{ route('level.update', $edit->id) }}" method="post" enctype="multipart/form-data">
         @csrf
         @method('PUT')

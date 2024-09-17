@@ -6,28 +6,27 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-    <form action="{{ route('gelombangs.update', $edit->id) }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label for="nama">Nama Gelombang</label>
-            <input class="form-control" type="text" name="nama_jurursan" id="nama_jurursan" required value="{{ $edit->nama_jurursan }}">
-        </div>
-        <div class="mb-3">
-            <label for="nama">Status</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="aktif" id="aktif0" value="0" required>
-                <label class="form-check-label" for="aktif0">Tidak Aktif</label>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form action="{{ route('gelombangs.update', $edit->id) }}" method="POST">
+                    @csrf
+                    <div class="card-header">
+                        <h4>Form Edit Gelombang</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Nama Gelombang</label>
+                            <input type="text" class="form-control" name="nama_gelombang" value="{{ $edit->nama_gelombang }}" required>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary">Perbarui</button>
+                        <a href="{{ route('gelombangs.index') }}" class="btn btn-danger">Kembali</a>
+                    </div>
+                </form>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="aktif" id="aktif1" value="1" required>
-                <label class="form-check-label" for="aktif1">Aktif</label>
-            </div>
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-outline-primary btn-sm">Perbarui</button>
-            <a href="{{ url('gelombang.index') }}" class="btn btn-outline-danger btn-sm">Back</a>
-        </div>
-    </form>
+    </div>
 
 @endsection

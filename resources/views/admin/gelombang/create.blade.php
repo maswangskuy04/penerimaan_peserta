@@ -6,16 +6,27 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-    <form action="{{ route('gelombangs.store') }}" method="post" enctype="multipart/form-data">
-        @csrf
-        <div class="mb-3">
-            <label for="nama">Nama Gelombang</label>
-            <input class="form-control" type="text" name="nama_gelombang" id="nama_gelombang" required>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form action="{{ route('gelombangs.store') }}" method="POST">
+                    @csrf
+                    <div class="card-header">
+                        <h4>Form Gelombang</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Nama Gelombang</label>
+                            <input type="text" class="form-control" name="nama_gelombang" required>
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary">Simpan</button>
+                        <a href="{{ route('gelombangs.index') }}" class="btn btn-danger">Kembali</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-outline-primary btn-sm">Perbarui</button>
-            <a href="{{ url('gelombangs.index') }}" class="btn btn-outline-danger btn-sm">Back</a>
-        </div>
-    </form>
+    </div>
 
 @endsection

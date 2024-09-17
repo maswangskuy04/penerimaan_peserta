@@ -13,21 +13,19 @@ return new class extends Migration
     {
         Schema::create('peserta_pelatihans', function (Blueprint $table) {
             $table->id();
-            // $table->unsignedBigInteger('id_jurusan');
-            // $table->unsignedBigInteger('id_gelombang');
             $table->string('nama_lengkap');
-            $table->string('nik');
-            $table->string('kartu_keluarga');
+            $table->char('nik', 16);
+            $table->char('kartu_keluarga', 16);
             $table->enum('jenis_kelamin', ['Laki-Laki', 'Perempuan']);
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('pendidikan_terakhir');
             $table->string('nama_sekolah');
-            $table->string('kejuruan');
             $table->string('no_hp');
             $table->string('email')->unique();
             $table->string('aktivitas_saat_ini');
             $table->tinyInteger('status')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

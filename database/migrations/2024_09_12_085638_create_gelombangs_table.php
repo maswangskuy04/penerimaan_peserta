@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nama_gelombang');
             $table->tinyInteger('aktif')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }

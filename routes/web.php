@@ -24,4 +24,5 @@ Route::prefix('admin')->middleware(['auth', 'web'])->group(function() {
     Route::resource('/peserta-pelatihan', PesertaPelatihanController::class);
     Route::resource('/jurusan', JurusanController::class);
     Route::resource('/gelombangs', GelombangsController::class);
+    Route::post('/gelombangs/update-status/{id}', [GelombangsController::class, 'updateStatus']);
 })->middleware('web');

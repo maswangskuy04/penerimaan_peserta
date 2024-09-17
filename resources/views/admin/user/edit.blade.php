@@ -6,31 +6,45 @@
         <div class="alert alert-success">{{ session('message') }}</div>
     @endif
 
-    <form action="{{ route('user.update', $edit->id) }}" method="post" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-        <div class="mb-3">
-            <label for="" class="form-label">Nama Level</label>
-            <select name="id_level" id="nama_level" class="form-select">
-                <option value="">Pilih Level</option>
-                @foreach ($levels as $lvl)
-                    <option value="{{ $lvl->id }}">{{ $lvl->nama_level }}</option>
-                @endforeach
-            </select>
+    <div class="row">
+        <div class="col-12 col-md-6 col-lg-6">
+            <div class="card">
+                <form action="{{ route('user.update', $edit->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
+                    <div class="card-header">
+                        <h4>Form User</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Level</label>
+                            <select name="id_level" class="form-control">
+                                <option value="">-- Pilih Level --</option>
+                                @foreach ($levels as $level)
+                                <option value="{{ $level->id }}" @if($level->id == $edit->id_level) selected @endif>{{ $level->nama_level }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Nama Lengkap</label>
+                            <input type="text" class="form-control" name="nama_lengkap" value="{{ $edit->nama_lengkap }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" class="form-control" name="email" value="{{ $edit->email }}" required>
+                        </div>
+                        <div class="form-group mb-0">
+                            <label>Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                    </div>
+                    <div class="card-footer text-right">
+                        <button class="btn btn-primary">Perbarui</button>
+                        <a href="{{ route('user.index') }}" class="btn btn-danger">Kembali</a>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="nama">Nama Lengkap</label>
-            <input class="form-control" type="text" name="nama_lengkap" id="nama_lengkap" required
-                value="{{ $edit->nama_lengkap }}">
-        </div>
-        <div class="mb-3">
-            <label for="nama">Email</label>
-            <input class="form-control" type="email" name="email" id="email" required value="{{ $edit->email }}">
-        </div>
-        <div class="mb-3">
-            <button type="submit" class="btn btn-outline-primary btn-sm">Perbarui</button>
-            <a href="{{ url('user.index') }}" class="btn btn-outline-danger btn-sm">Back</a>
-        </div>
-    </form>
+    </div>
 
 @endsection

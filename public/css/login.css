@@ -52,13 +52,16 @@ body, html{
 
 .wrapper {
     background-color: #35406A;
-    padding: 1em;
+    padding: 0.8em;
     position: relative;
+    width: 900px;
+    margin: 0 auto;
 }
 
 .wrapper .outline-container {
     background-color: #395DA9;
-    outline: #fff solid 10px;
+    outline: #fff solid 8px;
+    height: 100vh;
 }
 
 .wrapper .sub-header {
@@ -80,11 +83,35 @@ body, html{
 }
 
 .wrapper .outline-container .header {
-    display: grid;
+    padding: 0.25rem 0.50rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 25px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.wrapper .outline-container .header h3:nth-child(2) {
+    text-align: justify;
+    color: #fff;
 }
 
 .wrapper .outline-container .header .logo1 {
-
+    width: 100px;
+    height: 100px;
+    display: inline-block;
 }
 
+.wrapper .outline-container .header .logo2 {
+    background-color: #fff;
+    display: inline-block;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
 
+.wrapper .outline-container .header .text-header h3 {
+    color: #fff;
+    font-size: 1.5rem;
+}

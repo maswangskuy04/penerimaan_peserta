@@ -3,7 +3,6 @@
 @section('content')
 
 <div class="card">
-
     <div class="card-body">
         <table class="table table-striped">
             <tr>
@@ -70,22 +69,8 @@
             </tr>
         </table>
 
-        <form action="{{ route('peserta-pelatihan.update', $peserta->id) }}" method="POST">
-            @csrf
-            @method('PUT')
-            <div class="form-group">
-                <label for="status">Status Peserta:</label>
-                <select name="status" id="status" class="form-control">
-                    <option value="">Pilih Status</option>
-                    <option value="2">Lolos Administrasi</option>
-                    <option value="1">Tidak Lolos</option>
-                </select>
-            </div>
-
-
-
-        <a href="{{route('peserta-pelatihan.index')}}" class="btn btn-danger">Kembali</a>
-        <button type="submit" class="btn btn-primary mx-3">Update Status</button>
+        <a href="{{ route('peserta-pelatihan.index') }}" class="btn btn-danger">Kembali</a>
+        <button type="submit" class="btn btn-primary mx-3">Update Peserta</button>
     </form>
     </div>
 </div>
